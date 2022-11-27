@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html>
+<head>
+	
+	<title>Trabajo Final</title>
+
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+	<!-- CSS -->
+
+
+	<link rel="stylesheet" href="https://unpkg.com/leaflet@1.8.0/dist/leaflet.css"
+   integrity="sha512-hoalWLoI8r4UszCkZ5kL8vayOGVae1oxXe/2A4AO6J9+580uKHDO3JdHb7NzwwzK5xr/Fs0W40kiNHxM9vyTtQ=="
+   crossorigin=""/>
+
+   <!-- GEOCODER -->
+
+   <link rel="stylesheet" href="CSS/Control.OSMGeocoder.css" />
+
+   <!-- FULL SCREAM -->
+
+	<link rel="stylesheet" href="CSS/Control.FullScreen.css"/>
+ 
+ 	<!-- CSS BOOTSTRAP-->
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
+
+	<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+
+ 	<!-- ESTILO PROPIO-->
+   <link rel="stylesheet" href="CSS/estilo.css"/>
+	
+	<!-- JS -->
+	<script src="https://unpkg.com/leaflet@1.8.0/dist/leaflet.js"
+   integrity="sha512-BB3hKbKWOc9Ez/TAwyWxNXeoV9c1v6FIeYiBieIWkpLjauysF18NzgR1MBNBXf8/KABdlkX68nAhlwcDFLGPCQ=="
+   crossorigin=""></script>
+
+   <script src="JavaScript/Control.FullScreen.js"></script>
+
+   <script src="JavaScript/funciones.js"></script>
+
+
+   <script src="JavaScript/Control.OSMGeocoder.js"></script>
+
+   <script src="JavaScript/bootstrap.bundle.min.js"></script>
+
+   <!-- INCORPORANDO LAS CAPAS -->
+   <script id="ca" src="JavaScript/ciudades_argentinas.js" type="text/javascript"></script>
+   <script src="JavaScript/limites_argentina.js" type="text/javascript"></script>
+   <script src="JavaScript/ciudades_bolivia.js" type="text/javascript"></script>
+   <script src="JavaScript/limites_bolivia.js" type="text/javascript"></script>
+   <script src="JavaScript/ciudades_brasil.js" type="text/javascript"></script>
+   <script src="JavaScript/limites_brasil.js" type="text/javascript"></script>
+   <script src="JavaScript/ciudades_colombia.js" type="text/javascript"></script>
+   <script src="JavaScript/limites_colombia.js" type="text/javascript"></script>
+   <script src="JavaScript/ciudades_ecuador.js" type="text/javascript"></script>
+   <script src="JavaScript/limites_ecuador.js" type="text/javascript"></script>
+   <script src="JavaScript/ciudades_paraguay.js" type="text/javascript"></script>
+   <script src="JavaScript/limites_paraguay.js" type="text/javascript"></script>
+   <script src="JavaScript/ciudades_peru.js" type="text/javascript"></script>
+   <script src="JavaScript/limites_peru.js" type="text/javascript"></script>
+   <script src="JavaScript/ciudades_uruguay.js" type="text/javascript"></script>
+   <script src="JavaScript/limites_uruguay.js" type="text/javascript"></script>
+    <script src="JavaScript/ciudades_chile.js" type="text/javascript"></script>
+   <script src="JavaScript/limites_chile.js" type="text/javascript"></script>
+
+	<style type="text/css">
+		body {
+			padding: 0;
+			margin: 0;
+		}
+
+
+		html, body, #mapa {
+			height: 100%;
+			font-family: verdana;
+		}
+	</style>
+
+	
+</head>
+<body>
+
+	<!-- BANNER -->
+	<nav class="estilo-navbar">
+		<label for="" class="logo">
+			<a href=""><img src="CSS/logo_mundo.png" alt=""></a>
+			<h5 class="estilo-nombre">Visor de Latinoamérica</h5>
+		</label>
+		
+	</nav>
+	<!-- FIN BANNER -->
+
+	<!-- PANEL IZQUIERDO -->
+	<div class="container-fluid">
+
+ 		 <div class="row">
+
+ 		 	<nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
+      			<div class="position-sticky pt-3 sidebar-sticky">
+
+      				<!-- ACORDION -->
+
+      				<div class="accordion accordion-flush" id="accordionFlushExample">
+					  
+      			
+
+					    <h2 class="accordion-header" id="flush-headingOne">
+					      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+					        Seleccione un pais
+					      </button>
+					    </h2>
+						    <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
+						      <div class="accordion-body">Haga clic en el país que desee para observar su límite, las ciudades principales y población</div>
+						    </div>
+
+					    <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
+
+          			
+			          			<div class="contenedor">
+				          			<button class="boton" id="btnarg" type="button">Argentina</button>
+				          			<button class="botonx" id="btnargx" type="button" class="text-left">X</button>
+				          		</div>
+				          		<div class="contenedor">
+			          				<button class="boton" id="btnbra" type="button">Brasil</button>
+			          				<button class="botonx" id="btnbrax" type="button" class="text-left">X</button>
+			          			</div>
+			          			<div class="contenedor">
+			          				<button class="boton" id="btnbol" type="button">Bolivia</button>
+			          				<button class="botonx" id="btnbolx" type="button" class="text-left">X</button>
+			          			</div>
+			          			<div class="contenedor">
+			          				<button class="boton" id="btnchi" type="button">Chile</button>
+			          				<button class="botonx" id="btnchix" type="button" class="text-left">X</button>
+			          			</div>
+			          			<div class="contenedor">
+			          				<button class="boton" id="btncol" type="button">Colombia</button>
+			          				<button class="botonx" id="btncolx" type="button" class="text-left">X</button>
+			          			</div>
+			          			<div class="contenedor">
+			          				<button class="boton" id="btnpar" type="button">Paraguay</button>
+			          				<button class="botonx" id="btnparx" type="button" class="text-left">X</button>
+			          			</div>
+			          			<div class="contenedor">
+			          				<button class="boton" id="btnper" type="button">Peru</button>
+			          				<button class="botonx" id="btnperx" type="button" class="text-left">X</button>
+			          			</div>
+			          			<div class="contenedor">
+			          				<button class="boton" id="btnuru" type="button">Uruguay</button>
+			          				<button class="botonx" id="btnurux" type="button" class="text-left">X</button>
+			          			</div>
+			          	</div>
+          			</div>
+    		  	</div>
+   		    </nav>
+
+			<main class="col-md-9 ms-sm-auto col-lg-10">
+
+      			<div id="mapa" style="width:101%;height:650px;"></div>
+      			
+   			 </main>
+
+ 		 </div>
+ 		 
+	</div>
+	<!-- FIN PANEL IZQUIERDO -->
+
+
+	<script type="text/javascript">	
+
+	<!-- MAPAS BASE -->
+
+	var argenmap = new L.tileLayer('https://wms.ign.gob.ar/geoserver/gwc/service/tms/1.0.0/mapabase_gris@EPSG%3A3857@png/{z}/{x}/{-y}.png', {
+			minZoom: 1
+		}
+	);
+	
+	var darkm = new L.tileLayer('http://a.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}.png', {
+			minZoom: 1
+		}
+	);
+	var osm = new L.tileLayer('http://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+			minZoom: 1
+		}
+	);
+	var satelite = new L.tileLayer('https://mt1.google.com/vt/lyrs=s&x={x}&y={y}&z={z}', {
+			minZoom: 1
+		}
+	);
+
+
+	var baseLayers = {
+		"Dark Matter": darkm,
+		"OSM": osm,
+		"Google Satelite": satelite,
+		"Argenmap": argenmap
+	};
+	
+	var map = L.map('mapa', {
+        center: ["-32.964544187628874", "-64.7319076458128"],
+        zoom: 3,
+        layers: [argenmap],       
+        fullscreenControl: true,
+		fullscreenControlOptions: { // optional
+				title:"Ver en pantalla completa",
+				titleCancel:"Salir de pantalla completa"
+			}
+    });
+	L.control.layers(baseLayers).addTo(map);
+
+	<!-- FIN MAPAS BASE -->
+
+	<!-- ESCALA -->
+
+	L.control.scale({
+	  imperial: false
+	}
+	).addTo(map);
+
+	<!-- FIN ESCALA -->
+
+
+	<!-- BUSCADOR DE DIRECCIONES -->
+
+	var osmGeocoder = new L.Control.OSMGeocoder({placeholder: 'Buscar direccion'});
+	map.addControl(osmGeocoder)
+
+	<!-- FIN DE BUSCADOR DE DIRECCIONES -->
+
+
+	<!-- CAPAS -->
+
+		<!-- ESTILO CAPAS -->
+
+
+	function estilopuntoarg(feature, latlng) {
+	return L.circleMarker(latlng, {
+		radius: 6.0,
+		fillColor: '#85C1E9',
+		color: '#EAECEE',
+		weight: 1,
+		opacity: 1.0,
+		fillOpacity: 1.0
+
+	})
+	}
+
+	function estilopuntobra(feature, latlng) {
+	return L.circleMarker(latlng, {
+		radius: 6.0,
+		fillColor: '#16A085',
+		color: '#EAECEE',
+		weight: 1,
+		opacity: 1.0,
+		fillOpacity: 1.0
+	})
+	}
+
+	function estilopuntouru(feature, latlng) {
+	return L.circleMarker(latlng, {
+		radius: 6.0,
+		fillColor: '#154360',
+		color: '#EAECEE',
+		weight: 1,
+		opacity: 1.0,
+		fillOpacity: 1.0
+	})
+	}
+
+	function estilopuntopar(feature, latlng) {
+	return L.circleMarker(latlng, {
+		radius: 6.0,
+		fillColor: '#E74C3C',
+		color: '#EAECEE',
+		weight: 1,
+		opacity: 1.0,
+		fillOpacity: 1.0
+	})
+	}
+
+	function estilopuntochi(feature, latlng) {
+	return L.circleMarker(latlng, {
+		radius: 6.0,
+		fillColor: '#1B2631',
+		color: '#EAECEE',
+		weight: 1,
+		opacity: 1.0,
+		fillOpacity: 1.0
+	})
+	}
+
+	function estilopuntobol(feature, latlng) {
+	return L.circleMarker(latlng, {
+		radius: 6.0,
+		fillColor: '#F1C40F',
+		color: '#EAECEE',
+		weight: 1,
+		opacity: 1.0,
+		fillOpacity: 1.0
+	})
+	}
+
+	function estilopuntoper(feature, latlng) {
+	return L.circleMarker(latlng, {
+		radius: 6.0,
+		fillColor: '#922B21',
+		color: '#EAECEE',
+		weight: 1,
+		opacity: 1.0,
+		fillOpacity: 1.0
+	})
+	}
+
+	function estilopuntoecu(feature, latlng) {
+	return L.circleMarker(latlng, {
+		radius: 6.0,
+		fillColor: '#17202A',
+		color: '#EAECEE',
+		weight: 1,
+		opacity: 1.0,
+		fillOpacity: 1.0
+	})
+	}
+
+	function estilopuntocol(feature, latlng) {
+	return L.circleMarker(latlng, {
+		radius: 6.0,
+		fillColor: '#9A7D0A',
+		color: '#EAECEE',
+		weight: 1,
+		opacity: 1.0,
+		fillOpacity: 1.0
+	})
+	}
+
+	function estilolinea(feature) {
+	return {
+	    weight: 3.3,
+	    color: '#626567',
+	    opacity: 1.0,
+	    dashArray: '5, 5, 1, 5'
+	};
+	}
+
+	<!-- FIN ESTILO CAPAS -->
+
+	<!-- POPUP CAPAS -->
+
+	function onEachFeature(feature, layer) {
+		var popupContent = 'Pais: ' + feature.properties.pais + "<br/>Nombre: " + feature.properties.nombre + '<br/>Población: ' + feature.properties.poblacion;
+		layer.bindPopup(popupContent);
+	}
+
+	<!-- FIN POPUP CAPAS -->
+
+	<!-- CIUDADES Y LIMITES: AÑADIR Y REMOVER -->
+
+	<!-- Argentina -->
+
+	var capa_limites_argentina = L.geoJSON(limites_argentina, {
+	style: estilolinea
+	});
+	var capa_ciudades_argentinas = L.geoJSON(ciudades_argentinas, {
+	onEachFeature: onEachFeature,
+	pointToLayer: estilopuntoarg
+	});
+	
+	document.getElementById("btnarg").onclick=function(){
+		capa_limites_argentina.addTo(map);
+		capa_ciudades_argentinas.addTo(map);
+		document.getElementById("btnargx").style.display="inline-block";
+	};
+
+
+	document.getElementById("btnargx").onclick=function(){
+		map.removeLayer(capa_limites_argentina);
+		map.removeLayer(capa_ciudades_argentinas);
+		document.getElementById("btnargx").style.display="none";
+	};
+
+
+	<!-- Colombia -->
+
+	var capa_limites_colombia = L.geoJSON(limites_colombia, {
+	style: estilolinea
+	});
+	var capa_ciudades_colombia = L.geoJSON(ciudades_colombia, {
+	onEachFeature: onEachFeature,
+	pointToLayer: estilopuntocol
+	});
+
+	document.getElementById("btncol").onclick=function(){	
+		capa_limites_colombia.addTo(map);
+		capa_ciudades_colombia.addTo(map);
+		document.getElementById("btncolx").style.display="inline-block";
+	};
+
+	document.getElementById("btncolx").onclick=function(){		
+		map.removeLayer(capa_limites_colombia); 
+		map.removeLayer(capa_ciudades_colombia);
+		document.getElementById("btncolx").style.display="none";
+	};
+
+
+	<!-- Brasil -->
+ 
+	var capa_limites_brasil = L.geoJSON(limites_brasil, {
+	style: estilolinea
+	});
+	var capa_ciudades_brasil = L.geoJSON(ciudades_brasil, {
+	onEachFeature: onEachFeature,
+	pointToLayer: estilopuntobra
+	});
+
+	document.getElementById("btnbra").onclick=function(){
+		capa_limites_brasil.addTo(map);
+		capa_ciudades_brasil.addTo(map);
+		document.getElementById("btnbrax").style.display="inline-block";
+	};
+
+	document.getElementById("btnbrax").onclick=function(){
+		map.removeLayer(capa_limites_brasil);
+		map.removeLayer(capa_ciudades_brasil);
+		document.getElementById("btnbrax").style.display="none";
+	};
+
+
+	<!-- Uruguay -->
+
+	var capa_limites_uruguay = L.geoJSON(limites_uruguay, {
+	style: estilolinea
+	});
+	var capa_ciudades_uruguay = L.geoJSON(ciudades_uruguay, {
+	onEachFeature: onEachFeature,
+	pointToLayer: estilopuntouru
+	});
+
+	document.getElementById("btnuru").onclick=function(){
+		capa_limites_uruguay.addTo(map);
+		capa_ciudades_uruguay.addTo(map);
+		document.getElementById("btnurux").style.display="inline-block";
+	};
+
+	document.getElementById("btnurux").onclick=function(){
+		map.removeLayer(capa_limites_uruguay);
+		map.removeLayer(capa_ciudades_uruguay);
+		document.getElementById("btnurux").style.display="none";
+	};
+
+
+	<!-- Paraguay -->
+
+	var capa_limites_paraguay = L.geoJSON(limites_paraguay, {
+	style: estilolinea
+	});
+	var capa_ciudades_paraguay = L.geoJSON(ciudades_paraguay, {
+	onEachFeature: onEachFeature,
+	pointToLayer: estilopuntopar
+	});
+
+	document.getElementById("btnpar").onclick=function(){
+		capa_limites_paraguay.addTo(map);
+		capa_ciudades_paraguay.addTo(map);
+		document.getElementById("btnparx").style.display="inline-block";
+	};
+
+	document.getElementById("btnparx").onclick=function(){
+		map.removeLayer(capa_limites_paraguay);
+		map.removeLayer(capa_ciudades_paraguay);
+		document.getElementById("btnparx").style.display="none";
+	};
+
+
+	<!-- Chile -->
+
+	var capa_limites_chile = L.geoJSON(limites_chile, {
+	style: estilolinea
+	});
+	var capa_ciudades_chile = L.geoJSON(ciudades_chile, {
+	onEachFeature: onEachFeature,
+	pointToLayer: estilopuntochi
+	});
+
+	document.getElementById("btnchi").onclick=function(){
+		capa_limites_chile.addTo(map);
+		capa_ciudades_chile.addTo(map);
+		document.getElementById("btnchix").style.display="inline-block";
+	};
+
+	document.getElementById("btnchix").onclick=function(){
+		map.removeLayer(capa_limites_chile);
+		map.removeLayer(capa_ciudades_chile);
+		document.getElementById("btnchix").style.display="none";
+	};
+
+	
+	<!-- Bolivia -->
+
+
+	var capa_limites_bolivia = L.geoJSON(limites_bolivia, {
+	style: estilolinea
+	});
+	var capa_ciudades_bolivia = L.geoJSON(ciudades_bolivia, {
+	onEachFeature: onEachFeature,
+	pointToLayer: estilopuntobol
+	});
+
+	document.getElementById("btnbol").onclick=function(){
+		capa_limites_bolivia.addTo(map);
+		capa_ciudades_bolivia.addTo(map);
+		document.getElementById("btnbolx").style.display="inline-block";
+	};
+
+	document.getElementById("btnbolx").onclick=function(){
+		map.removeLayer(capa_limites_bolivia);
+		map.removeLayer(capa_ciudades_bolivia);
+		document.getElementById("btnbolx").style.display="none";
+	};
+
+
+	<!-- Peru -->
+
+	var capa_limites_peru = L.geoJSON(limites_peru, {
+	style: estilolinea
+	});
+	var capa_ciudades_peru = L.geoJSON(ciudades_peru, {
+	onEachFeature: onEachFeature,
+	pointToLayer: estilopuntoper
+	});
+
+
+	document.getElementById("btnper").onclick=function(){
+		capa_limites_peru.addTo(map);
+		capa_ciudades_peru.addTo(map);
+		document.getElementById("btnperx").style.display="inline-block";
+	};
+
+	document.getElementById("btnperx").onclick=function(){
+		map.removeLayer(capa_limites_peru);
+		map.removeLayer(capa_ciudades_peru);
+		document.getElementById("btnperx").style.display="none";
+	};
+
+	<!-- Ecuador -->
+
+	var capa_limites_ecuador = L.geoJSON(limites_ecuador, {
+	style: estilolinea
+	});
+	var capa_ciudades_ecuador = L.geoJSON(ciudades_ecuador, {
+	onEachFeature: onEachFeature,
+	pointToLayer: estilopuntoecu
+	});
+
+	document.getElementById("btnecu").onclick=function(){
+		capa_limites_ecuador.addTo(map);
+		capa_ciudades_ecuador.addTo(map);
+		document.getElementById("btnecux").style.display="inline-block";
+	};
+
+	document.getElementById("btnecux").onclick=function(){
+		map.removeLayer(capa_limites_ecuador);
+		map.removeLayer(capa_ciudades_ecuador);
+		document.getElementById("btnecux").style.display="none";
+	};
+
+
+	
+	<!-- FIN CIUDADES Y LIMITES -->
+
+
+
+
+
+	</script>
+
+</body>
+</html>
